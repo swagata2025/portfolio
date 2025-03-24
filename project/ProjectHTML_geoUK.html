@@ -1,0 +1,171 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>UK Quiz Game</title>
+    <style>
+        body {
+            font-family: Arial, sans-serif;
+            background-color: #ADD8E6; /* Light Blue */
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            height: 100vh;
+            margin: 0;
+        }
+        .quiz-container {
+            background-color: #fff; /* White */
+            padding: 20px;
+            border-radius: 8px;
+            box-shadow: 0 0 10px rgba(0, 0, 0, 0.1);
+            width: 350px;
+            text-align: center;
+            color: black;
+        }
+        .question {
+            font-size: 20px;
+            margin-bottom: 20px;
+            font-weight: bold;
+        }
+        .hint {
+            color: #888;
+            margin-top: 10px;
+        }
+        .buttons {
+            display: flex;
+            flex-direction: column;
+            align-items: center;
+        }
+        .button {
+            background-color: #333; /* Black */
+            color: white;
+            padding: 10px;
+            border: none;
+            cursor: pointer;
+            border-radius: 5px;
+            width: 80%;
+            margin: 5px;
+        }
+        .button:hover {
+            background-color: #555; /* Darker Black */
+        }
+        .result {
+            display: none;
+            margin-top: 20px;
+            font-size: 20px;
+            font-weight: bold;
+            color: black;
+        }
+    </style>
+</head>
+<body>
+
+    <div class="quiz-container">
+        <div id="quiz">
+            <div class="question" id="question">Question will go here</div>
+            <div class="buttons">
+                <button class="button" onclick="checkAnswer('A')">A</button>
+                <button class="button" onclick="checkAnswer('B')">B</button>
+                <button class="button" onclick="checkAnswer('C')">C</button>
+                <button class="button" onclick="checkAnswer('D')">D</button>
+            </div>
+            <div class="hint" id="hint"></div>
+        </div>
+        <div class="result" id="result"></div>
+    </div>
+
+    <script>
+        const questions = [
+            {
+                question: "Who was the first monarch of the United Kingdom?",
+                options: ["A) Queen Victoria", "B) King George III", "C) Queen Elizabeth II", "D) King James VI"],
+                correctAnswer: "D",
+                hint: "He unified England and Scotland in 1603."
+            },
+            {
+                question: "In which year did the UK join the European Economic Community (EEC)?",
+                options: ["A) 1957", "B) 1964", "C) 1973", "D) 1980"],
+                correctAnswer: "C",
+                hint: "This was after the EEC was established by the Treaty of Rome."
+            },
+            {
+                question: "Which British city is known as the 'City of Dreaming Spires'?",
+                options: ["A) Cambridge", "B) Oxford", "C) Edinburgh", "D) London"],
+                correctAnswer: "B",
+                hint: "It is home to the University of Oxford."
+            },
+            {
+                question: "What is the national flower of Wales?",
+                options: ["A) Rose", "B) Daffodil", "C) Thistle", "D) Shamrock"],
+                correctAnswer: "B",
+                hint: "It blooms brightly in spring and is worn on St David's Day."
+            },
+            {
+                question: "Who wrote the famous play 'Macbeth'?",
+                options: ["A) Charles Dickens", "B) George Bernard Shaw", "C) William Shakespeare", "D) Jane Austen"],
+                correctAnswer: "C",
+                hint: "He is considered one of the greatest playwrights in English literature."
+            },
+            {
+                question: "Which city is the capital of Scotland?",
+                options: ["A) Glasgow", "B) Aberdeen", "C) Edinburgh", "D) Dundee"],
+                correctAnswer: "C",
+                hint: "It is known for the Edinburgh Festival and the famous castle."
+            },
+            {
+                question: "What is the longest river in the UK?",
+                options: ["A) River Thames", "B) River Severn", "C) River Mersey", "D) River Trent"],
+                correctAnswer: "B",
+                hint: "It flows through Wales and England."
+            },
+            {
+                question: "Who was the British Prime Minister during World War II?",
+                options: ["A) Winston Churchill", "B) Neville Chamberlain", "C) Harold Macmillan", "D) Clement Attlee"],
+                correctAnswer: "A",
+                hint: "He led the country during its darkest hours and delivered the 'We shall fight on the beaches' speech."
+            }
+        ];
+
+        let currentQuestionIndex = 0;
+        let score = 0;
+
+        function loadQuestion() {
+            const questionData = questions[currentQuestionIndex];
+            document.getElementById("question").textContent = questionData.question;
+            document.getElementById("hint").textContent = "";
+            document.querySelectorAll(".button")[0].textContent = questionData.options[0];
+            document.querySelectorAll(".button")[1].textContent = questionData.options[1];
+            document.querySelectorAll(".button")[2].textContent = questionData.options[2];
+            document.querySelectorAll(".button")[3].textContent = questionData.options[3];
+        }
+
+        function checkAnswer(selectedOption) {
+            const questionData = questions[currentQuestionIndex];
+            const hintElement = document.getElementById("hint");
+
+            if (selectedOption === questionData.correctAnswer) {
+                score++;
+                currentQuestionIndex++;
+                if (currentQuestionIndex < questions.length) {
+                    loadQuestion();
+                } else {
+                    showResult();
+                }
+            } else {
+                hintElement.textContent = "Hint: " + questionData.hint;
+            }
+        }
+
+        function showResult() {
+            const resultElement = document.getElementById("result");
+            resultElement.style.display = "block";
+            resultElement.textContent = `Quiz Over! You scored ${score} out of ${questions.length}.`;
+            document.getElementById("quiz").style.display = "none";
+        }
+
+        loadQuestion();
+    </script>
+
+</body>
+</html>

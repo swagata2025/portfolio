@@ -1,0 +1,94 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Guess the Number Game</title>
+    <style>
+        /* Basic reset */
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+        }
+
+        /* Body and center alignment */
+        body {
+            font-family: Arial, sans-serif;
+            background-color: #ADD8E6; /* Light Blue */
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            height: 100vh;
+        }
+
+        /* Game container */
+        .game-container {
+            background-color: #333; /* Black */
+            padding: 20px;
+            border-radius: 10px;
+            box-shadow: 0 0 10px rgba(34, 6, 6, 0.1);
+            text-align: center;
+            width: 300px;
+            color: white;
+        }
+
+        /* Button and input styling */
+        input {
+            padding: 8px;
+            margin: 10px 0;
+            width: 60px;
+            text-align: center;
+        }
+
+        button {
+            padding: 8px 15px;
+            cursor: pointer;
+        }
+
+        /* Feedback text */
+        #feedback {
+            margin-top: 20px;
+            font-weight: bold;
+            font-size: 1.2em;
+        }
+    </style>
+</head>
+<body>
+    <div class="game-container">
+        <h1>Guess the Number</h1>
+        <p>Guess a number between 1 and 50</p>
+        
+        <input type="number" id="guess" min="1" max="50" placeholder="Enter a number">
+        <button onclick="checkGuess()">Guess</button>
+
+        <p id="feedback"></p>
+    </div>
+
+    <script>
+        // Generate a random number between 1 and 50
+        const randomNumber = Math.floor(Math.random() * 50) + 1;
+
+        function checkGuess() {
+            // Parse the input as an integer to ensure correct comparison
+            const userGuess = parseInt(document.getElementById('guess').value);
+            const feedback = document.getElementById('feedback');
+
+            // Validate if the input is a number between 1 and 50
+            if (isNaN(userGuess) || userGuess < 1 || userGuess > 50) {
+                feedback.textContent = 'Please enter a valid number between 1 and 50.';
+                feedback.style.color = 'orange';
+            } else if (userGuess === randomNumber) {
+                feedback.textContent = 'Congratulations! You guessed the correct number!';
+                feedback.style.color = 'green';
+            } else if (userGuess < randomNumber) {
+                feedback.textContent = 'Too low! Try again.';
+                feedback.style.color = 'red';
+            } else {
+                feedback.textContent = 'Too high! Try again.';
+                feedback.style.color = 'red';
+            }
+        }
+    </script>
+</body>
+</html>
